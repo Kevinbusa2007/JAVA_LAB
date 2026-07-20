@@ -12,7 +12,6 @@ public class array{
         {
             if(a[i]%4==0)
             {
-             
                 a[i]=a[i]*5;
             }
         }
