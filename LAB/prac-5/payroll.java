@@ -1,76 +1,91 @@
-abstract class employee
+abstract class Employee
 {
-    abstract void monthlysalary();
     String name;
     int id;
-    employee(String name, int id) {
+
+    Employee(String name, int id)
+    {
         this.name = name;
         this.id = id;
     }
+
+    abstract double monthlySalary();
 }
-class fulltime extends employee
+
+class FullTime extends Employee
 {
-    int fixed;
-    fulltime(String name, int id,int fixed)
+    double salary;
+
+    FullTime(String name, int id, double salary)
     {
-        // this.name = name;
-        // this.id = id;
         super(name, id);
-        this.fixed=fixed;
+        this.salary = salary;
     }
-    void monthlysalary()
+
+    double monthlySalary()
     {
-        System.out.println("Fulltime = "+fixed);
-        payroll.total += fixed; 
-    }
-}
-class parttime extends employee
-{
-    int hours,rate;
-    parttime(String name, int id,int hours,int rate)
-    {
-        // this.name = name;
-        // this.id = id;
-        super(name, id);
-        this.hours=hours;
-        this.rate=rate;
-    }
-    void monthlysalary()
-    {
-        System.out.println("Parttime = "+(hours*rate));
-        payroll.total += hours * rate;
-    }
-}
-class intern extends employee
-{
-    int stipend;
-    intern(String name, int id,int stipend)
-    {
-        // this.name = name;
-        // this.id = id;
-        super(name, id);
-        this.stipend=stipend;
-    }
-    void monthlysalary()
-    {
-        System.out.println("Intern = "+stipend);
-        payroll.total += stipend;
+        return salary;
     }
 }
 
-public class payroll
+class PartTime extends Employee
 {
-    static double total=0;
-    public static void main(String[] args) {
-        employee[] e={
-            new fulltime("kevin",10,2),
-            new parttime("kevin",10,2,7),
-            new intern("kevin",10,2),
-        };
-        for(employee e1:e)
-        {
-            e1.monthlysalary();
-        }
-         System.out.println("Total = " + total);
+    int hours;
+    double rate;
+
+    PartTime(String name, int id, int hours, double rate)
+    {
+        super(name, id);
+        this.hours = hours;
+        this.rate = rate;
+    }
+
+    double monthlySalary()
+    {
+        return hours * rate;
     }
 }
+
+class Intern extends Employee
+{
+    double stipend;
+
+    Intern(String name, int id, double stipend)
+    {
+        super(name, id);
+        this.stipend = stipend;
+    }
+
+    double monthlySalary()
+    {
+        return stipend;
+    }
+}
+
+public class Payroll
+{
+    public static void main(String[] args)
+    {
+        Employee[] employees = {
+            new FullTime("Kevin", 101, 30000),
+            new PartTime("Riya", 102, 80, 200),
+            new Intern("Om", 103, 10000)
+        };
+
+        double total = 0;
+
+        for (Employee e : employees)
+        {
+            double salary = e.monthlySalary();
+
+            System.out.println(e.name + " Salary: " + salary);
+
+            if (e instanceof Intern)
+                System.out.println("Note: This is an Intern");
+
+            total += salary;
+        }
+
+        System.out.println("Total Salary: " + total);
+    }
+}   
