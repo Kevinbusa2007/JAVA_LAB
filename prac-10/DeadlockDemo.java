@@ -14,7 +14,6 @@ class DeadlockDemo {
                 }
             }
         });
-
         Thread t2 = new Thread(() -> {
             synchronized (account2) {
                 System.out.println("Thread 2 locked Account 2");
